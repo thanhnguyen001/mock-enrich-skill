@@ -1,0 +1,13 @@
+@import '~antd/dist/antd.css';
+
+[data-theme="light"] {
+    --primary-color: #0aa679;
+    --bg-primary-color: #245fcd;
+    --text-color: black;
+}
+
+[data-theme="dark"] {
+    --primary-color: white;
+    --bg-primary-color: #121212;
+    --text-color: #fffff2;
+}
