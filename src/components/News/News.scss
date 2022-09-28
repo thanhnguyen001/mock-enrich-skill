@@ -1,0 +1,15 @@
+.news {
+  box-shadow: 0 2px 3px #000;
+  min-height: 22px;
+  &-wrapper {
+  }
+  &-author {
+    img {
+      width: var(--width-avatar);
+      height: var(--height-avatar);
+      border-radius: 50%;
+      box-shadow: 0 0 8px #000;
+      overflow: hidden;
+    }
+  }
+}

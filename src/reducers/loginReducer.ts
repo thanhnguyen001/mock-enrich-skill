@@ -1,16 +1,20 @@
+import { storageKey } from './../constants/storageKey';
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = false;
+const isHasKey = localStorage.getItem(storageKey.token);
+const initialState = isHasKey ? JSON.parse(isHasKey) : false;
 
 export const loginSlice = createSlice({
-    name: 'is_login',
+    name: 'token',
     initialState,
     reducers: {
-        login: (state) => {
-            return state = true;
+        login: (state, action) => {
+            localStorage.setItem(storageKey.token, JSON.stringify(true));
+            return state = action.payload;
         },
-        logout: (state) => {
-            return state = false;
+        logout: (state, action) => {
+            localStorage.setItem(storageKey.token, JSON.stringify(''));
+            return state = '';
         }
     }
 })

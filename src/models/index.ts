@@ -6,7 +6,7 @@ export interface IReqRegUser {
   xac_nhan_mat_khau: string;
 }
 
-export interface IResRegUser {
+export interface IUser {
   nhan_vien_id?: string;
   ten_tai_khoan: string;
   ten_nhan_vien: string;
@@ -23,6 +23,27 @@ export interface IResRegUser {
   ma_hoa?: string;
   nhom_nhan_vien_id?: string;
   nguoi_tao?: string;
+  ngay_tao?: string;
+  nguoi_sua?: string;
+  ngay_sua?: string;
+}
+
+export interface IResRegUser {
+  data: IUser;
+  token: string;
+}
+
+export interface INews {
+  tin_tuc_id?: string;
+  uniqueItems: true;
+  tieu_de?: string;
+  mo_ta?: string;
+  noi_dung?: string;
+  anh_dai_dien?: string;
+  nguoi_tao?: string;
+  trang_thai?: string;
+  tin_moi: number;
+  tin_noi_bat: number;
   ngay_tao?: string;
   nguoi_sua?: string;
   ngay_sua?: string;

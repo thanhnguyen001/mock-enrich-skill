@@ -1,4 +1,5 @@
-import { IReqRegUser, IResRegUser } from "./../models";
+import { IResRegUser } from "models";
+import { IReqRegUser } from "./../models";
 import pathApi from "./apiPath";
 import axiosClient from "./axiosClient";
 

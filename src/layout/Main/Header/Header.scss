@@ -1,0 +1,23 @@
+#header {
+    height: var(--height-header);
+    box-shadow: 0 2px 5px rgb(155, 155, 155);
+  #logo {
+    box-shadow: 0px 0px 8px #157ed4;
+    color: #157ed4;
+    cursor: pointer;
+  }
+
+  .header-user {
+    &-avatar {
+      width: var(--width-avatar);
+      height: var(--height-avatar);
+      border-radius: 50%;
+      box-shadow: 0 0 8px #000;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}

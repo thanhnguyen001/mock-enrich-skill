@@ -1,16 +1,19 @@
 import axios from "axios";
+import ignoreApi from "constants/ignoreApi";
+import { show } from "reducers/dialogReducer";
+import { store } from "reducers/store";
 import { storageKey } from "../constants/storageKey";
 
 // const BASE_URL =
 //   process.env.NODE_ENV !== "production" ? '' : '';
-const BASE_URL = "https://exam-dev-api.web5days.com:5001";
+const BASE_URL = "https://exam-dev-api.web5days.com:5001/api";
 
 const axiosClient = axios.create({
   baseURL: BASE_URL,
   // timeout: 1000,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${localStorage.getItem(storageKey.TOKEN)}`,
+    Authorization: `Bearer ${localStorage.getItem(storageKey.token)}`,
   },
 });
 
@@ -18,11 +21,11 @@ axiosClient.interceptors.request.use(
   async (config) => {
     // Do something before request is sent
     // const token = await getFireBaseToken();
-    const token = localStorage.getItem(storageKey.TOKEN);
+    const token = localStorage.getItem(storageKey.token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
       // console.log(token)
-      localStorage.setItem(storageKey.TOKEN, token);
+      localStorage.setItem(storageKey.token, token);
     }
 
     return config;
@@ -45,6 +48,10 @@ axiosClient.interceptors.response.use(
   (error) => {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
+    if (error.response?.status >= 400 && !ignoreApi.includes(error?.config?.url)) {
+      const msgError = error.response.data.error;
+      store.dispatch(show({ type: "notify", msg: msgError, isShow: true, title: 'Lỗi' }));
+    }
     return Promise.reject(error);
   }
 );

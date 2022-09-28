@@ -1,3 +1,5 @@
 export const storageKey = {
-  TOKEN: "TOKEN",
+  token: "token",
+  is_login: "is_login",
+  user: "user",
 };
