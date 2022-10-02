@@ -1,0 +1,35 @@
+#left-bar {
+  margin-top: calc(var(--height-header));
+  &.none {
+    display: none;
+  }
+  &.small {
+    transition: all 0.3s linear;
+    width: 60px !important;
+    box-shadow: 2px 0 3px #ccc;
+
+    .category {
+      justify-content: center;
+    }
+
+  }
+  .categories {
+    top: calc(var(--height-header) + 16px);
+  }
+  .category {
+    border-radius: 5px;
+    transition: all 0.1s ease-in-out;
+    min-height: 40px;
+    &:hover {
+      background-color: rgb(155, 212, 245);
+    }
+  }
+  .tags {
+    .tag {
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

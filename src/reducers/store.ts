@@ -1,13 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import dialogReducer from "./dialogReducer";
+import layoutReducer from "./layoutReducer";
 import loginReducer from "./loginReducer";
+import newsReducer from "./newsReducer";
+import themeReducer from "./themeReducer";
 import userReducer from "./userReducer";
 
 export const store = configureStore({
   reducer: {
-    is_login: loginReducer,
+    token: loginReducer,
     user: userReducer,
     dialog: dialogReducer,
+    theme: themeReducer,
+    news: newsReducer,
+    layout: layoutReducer,
   },
 });
 

@@ -1,3 +1,6 @@
-#content {
-    
+main {
+    gap: 16px;
+    .content {
+        padding-top: calc(var(--height-header) + 16px);
+    }
 }

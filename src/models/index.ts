@@ -1,3 +1,22 @@
+// common
+export interface IResponseData<T> {
+  msg?: string;
+  success?: boolean;
+  data?: T;
+}
+
+export interface IResponseError {
+  error: string;
+  success: boolean;
+}
+
+export interface ILayout {
+  leftBar?: "small" | "normal" | "none";
+  rightBar?: "small" | "normal" | "none";
+}
+
+// User's models
+//#region
 export interface IReqRegUser {
   ten_tai_khoan: string;
   ten_nhan_vien: string;
@@ -33,6 +52,15 @@ export interface IResRegUser {
   token: string;
 }
 
+export interface ILoginUser {
+  ten_tai_khoan: string;
+  mat_khau: string;
+}
+
+//#endregion
+
+// News's models
+//#endregion
 export interface INews {
   tin_tuc_id?: string;
   uniqueItems: true;
@@ -48,3 +76,19 @@ export interface INews {
   nguoi_sua?: string;
   ngay_sua?: string;
 }
+
+export interface INewsCategory {
+  nhom_tin_tuc_id?: string;
+  uniqueItems: string;
+  ten_nhom: string;
+  mo_ta?: string;
+  anh_dai_dien?: string;
+  nhom_cha_id?: string;
+  trang_thai?: string;
+  nguoi_tao?: string;
+  ngay_tao?: string;
+  nguoi_sua?: string;
+  ngay_sua?: string;
+}
+
+//#endregion

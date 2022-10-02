@@ -1,6 +1,11 @@
 #header {
-    height: var(--height-header);
-    box-shadow: 0 2px 5px rgb(155, 155, 155);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--height-header);
+  box-shadow: 0 2px 5px rgb(155, 155, 155);
+  z-index: 10;
   #logo {
     box-shadow: 0px 0px 8px #157ed4;
     color: #157ed4;
@@ -8,6 +13,7 @@
   }
 
   .header-user {
+    position: relative;
     &-avatar {
       width: var(--width-avatar);
       height: var(--height-avatar);
@@ -16,8 +22,40 @@
       overflow: hidden;
       img {
         width: 100%;
-        height: auto;
+        height: 100%;
       }
+    }
+
+    &-logout {
+      .icon {
+        margin-top: 2px;
+        transition: all 0.2s linear;
+      }
+      .icon.active {
+        transform: rotateZ(-90deg);
+
+        & ~ .header-user-action {
+          display: block;
+          top: calc(100% + 8px);
+          left: 0;
+          right: 0;
+          background-color: rgba(0,0,0,0.4);
+          border-radius: 5px;
+          padding: 2px 8px;
+          cursor: pointer;
+          color: white;
+
+          &:hover {
+            background-color: rgba(0,0,0,0.6);
+          }
+        }
+      }
+    }
+
+    &-action {
+      display: none;
+      position: absolute;
+      transition: all 0.2s ease-in-out;
     }
   }
 }

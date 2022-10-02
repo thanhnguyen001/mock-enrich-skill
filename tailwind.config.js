@@ -25,6 +25,7 @@ module.exports = {
       'black': 'black',
       'primary': 'var(--primary-color)',
       'tx-color': 'var(--text-color)',
+      'bg-primary': 'var(--bg-primary-color)',
     },
     opacity: {
       '0': '0',

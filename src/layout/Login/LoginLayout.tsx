@@ -7,7 +7,7 @@ type LoginLayoutProps = {
 
 const LoginLayout = (props: LoginLayoutProps) => {
   return (
-    <div className="login w-full h-[100vh]  relative">
+    <div className="login w-full h-[100vh]  relative h-full flex justify-center items-center">
       <div className="absolute inset-0 z-[-1]">
         <img className="w-full h-full" src={imgs.bgLogin} alt="gb-login" />
       </div>

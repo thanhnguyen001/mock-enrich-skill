@@ -1,3 +1,5 @@
+import { IResponseData } from 'models';
+import { IResponseError } from './../models/index';
 import axios from "axios";
 import ignoreApi from "constants/ignoreApi";
 import { show } from "reducers/dialogReducer";
@@ -23,6 +25,7 @@ axiosClient.interceptors.request.use(
     // const token = await getFireBaseToken();
     const token = localStorage.getItem(storageKey.token);
     if (token) {
+      //@ts-ignore
       config.headers.Authorization = `Bearer ${token}`;
       // console.log(token)
       localStorage.setItem(storageKey.token, token);

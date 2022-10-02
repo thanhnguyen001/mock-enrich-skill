@@ -1,8 +1,11 @@
 export const routePath = {
   log: {
-    login: "login",
-    register: "register",
+    path: "/log",
+    register: "/register",
+    login: "/login",
   },
-  home: "/",
-  user: ''
+  home: {
+    path: "/home",
+  },
+  user: "",
 };

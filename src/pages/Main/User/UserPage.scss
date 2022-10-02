@@ -1,0 +1,26 @@
+.user {
+  &-intro {
+    background-color: white;
+    box-shadow: 0 0 6px #ccc;
+    padding: 16px;
+  }
+
+  &-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    // box-shadow: 0 0 8px #ccc;
+    grid-column: 1 / span 1;
+    outline: 4px solid var(--blue);
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &-contact {
+    grid-column: 2 / span 1;
+  }
+}

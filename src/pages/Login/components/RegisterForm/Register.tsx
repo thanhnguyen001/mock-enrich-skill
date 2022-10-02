@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "hooks/hook";
 import { IReqRegUser } from "models";
 import { login } from "reducers/loginReducer";
 import Loading from "components/Loading/Loading";
-import { storeUserInfo } from "reducers/userReducer";
+import { setUserInfo } from "reducers/userReducer";
 import { routePath } from "routes/routePath";
 
 const formItemLayout = {
@@ -56,9 +56,9 @@ const Register = () => {
     setIsLoading(true);
     userApi.postUser({ ...formBody }).then((res) => {
       if (res.data.data) {
-        dispatch(storeUserInfo(res.data));
+        dispatch(setUserInfo(res.data));
         dispatch(login(res.data.token));
-        navigate(routePath.home);
+        navigate(routePath.home.path);
       }
     });
   };

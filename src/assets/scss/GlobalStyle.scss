@@ -2,13 +2,13 @@
 
 [data-theme="light"] {
     --primary-color: #0aa679;
-    --bg-primary-color: #245fcd;
+    --bg-primary-color: #f5f5f5;
     --text-color: black;
 }
 
 [data-theme="dark"] {
     --primary-color: white;
-    --bg-primary-color: #121212;
+    --bg-primary-color: #18191a;
     --text-color: #fffff2;
 }
 
@@ -16,8 +16,15 @@
     --height-header: 60px;
     --height-avatar: 35px;
     --width-avatar: 35px;
+    --blue: #157ed4;
 }
 
 p {
     margin: 0;
+}
+
+.separate {
+    border-top: 1px solid var(--text-color);
+    opacity: 0.8;
+    width: 100%;
 }

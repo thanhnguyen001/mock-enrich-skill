@@ -5,25 +5,28 @@ import Register from "./components/RegisterForm/Register";
 import "./LoginPage.scss";
 import { useAppSelector } from "hooks/hook";
 import { routePath } from "routes/routePath";
+import LoginLayout from "layout/Login/LoginLayout";
 
 const LoginPage: React.FC = () => {
-  const is_login = useAppSelector((state) => state.is_login);
+  const token = useAppSelector((state) => state.token);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (is_login) {
-      navigate(routePath.home);
+    if (token) {
+      navigate(routePath.home.path);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [is_login]);
+  }, [token]);
 
   return (
     <div id="login-page" className="h-full flex justify-center items-center">
-      <Routes>
-        <Route path="" element={<LoginForm />}></Route>
-        <Route path="login" element={<LoginForm />}></Route>
-        <Route path="register" element={<Register />}></Route>
-      </Routes>
+      <LoginLayout>
+        <Routes>
+          <Route path="" element={<LoginForm />}></Route>
+          <Route path="login" element={<LoginForm />}></Route>
+          <Route path="register" element={<Register />}></Route>
+        </Routes>
+      </LoginLayout>
     </div>
   );
 };

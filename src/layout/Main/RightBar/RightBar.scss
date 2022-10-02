@@ -1,0 +1,15 @@
+#right-bar {
+    margin-top: calc(var(--height-header) + 16px);
+
+    &.none {
+        display: none;
+    }
+    .right-news-list {
+        display: grid;
+        gap: 8px;
+    }
+
+    // .right-content {
+    //     top: calc(var(--height-header) + 16px);
+    // }
+}

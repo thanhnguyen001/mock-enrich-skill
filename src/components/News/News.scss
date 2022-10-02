@@ -1,8 +1,8 @@
 .news {
-  box-shadow: 0 2px 3px #000;
+  box-shadow: 0 0px 3px rgb(132, 132, 132);
   min-height: 22px;
-  &-wrapper {
-  }
+  // &-wrapper {
+  // }
   &-author {
     img {
       width: var(--width-avatar);
@@ -10,6 +10,24 @@
       border-radius: 50%;
       box-shadow: 0 0 8px #000;
       overflow: hidden;
+      cursor: pointer;
+    }
+  }
+  &-author-name {
+    .name {
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &-tags {
+    .tag {
+      color: #157ed4;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }

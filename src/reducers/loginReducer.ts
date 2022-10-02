@@ -9,11 +9,12 @@ export const loginSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action) => {
-            localStorage.setItem(storageKey.token, JSON.stringify(true));
+            if (!action.payload) return state = '';
+            localStorage.setItem(storageKey.token, JSON.stringify(action.payload));
             return state = action.payload;
         },
-        logout: (state, action) => {
-            localStorage.setItem(storageKey.token, JSON.stringify(''));
+        logout: (state) => {
+            localStorage.removeItem(storageKey.token);
             return state = '';
         }
     }

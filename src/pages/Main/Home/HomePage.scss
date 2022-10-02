@@ -1,0 +1,28 @@
+.home {
+  &-heading {
+    .display {
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: var(--blue);
+        color: white;
+      }
+
+      &.active {
+        background-color: var(--blue);
+        color: white;
+      }
+    }
+  }
+
+  &-news-list {
+    display: grid;
+    gap: 16px;
+
+    &.all-list {
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    }
+  }
+}
