@@ -33,7 +33,7 @@ const RightBar = () => {
     }
   };
   return (
-    <div id="right-bar" className={`w-[240px] ${rightBar}`}>
+    <div id="right-bar" className={`w-[280px] ${rightBar}`}>
       <div className="right-content">
         <div className="right-heading">
           <p className="text-[20px] font-[700] mb-16px">Top News</p>

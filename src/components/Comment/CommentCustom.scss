@@ -1,0 +1,36 @@
+.cmt-parent {
+  position: relative;
+  & .cmt-linked {
+    position: absolute;
+    width: 1px;
+    background-color: #ccc;
+    top: 52px;
+    left: 16px;
+    bottom: 0;
+  }
+}
+.cmt-child {
+  position: relative;
+  & .cmt-linked{
+    position: absolute;
+    background-color: transparent;
+    top: 20px;
+    left: 16px;
+    width: 20px;
+    height: 20px;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom-left-radius: 5px;
+  }
+}
+// .cmt-child:last-child {
+//   &::after {
+//     position: absolute;
+//     content: "";
+//     top: 24px;
+//     left: 16px;
+//     bottom: 0;
+//     width: 2px;
+//     background-color: red;
+//   }
+// }

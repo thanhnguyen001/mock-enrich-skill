@@ -1,4 +1,7 @@
 import { CommentOutlined, HeartFilled } from "@ant-design/icons";
+import { Avatar, Button, Comment, Form } from "antd";
+import TextArea from "antd/lib/input/TextArea";
+import CommentCustom from "components/Comment/CommentCustom";
 import { BASE_API_GET_IMG } from "constants/constant";
 import { useAppDispatch } from "hooks/hook";
 import { INews } from "models";
@@ -85,9 +88,11 @@ const News: React.FC<NewsProps> = (props: NewsProps) => {
               <img className="w-full h-[auto]" src={`${BASE_API_GET_IMG}${news.anh_dai_dien}`} alt="" />
             </div>
           )}
-          {isDetail && <div className="news-detail mt-16px">
-            <div className="" dangerouslySetInnerHTML={{__html: `${news.noi_dung}`}}></div>
-          </div>}
+          {isDetail && (
+            <div className="news-detail mt-16px">
+              <div className="" dangerouslySetInnerHTML={{ __html: `${news.noi_dung}` }}></div>
+            </div>
+          )}
           <div className="news-action flex items-center justify-between mt-24px">
             <p className="news-liked flex items-center ">
               <HeartFilled
@@ -102,6 +107,29 @@ const News: React.FC<NewsProps> = (props: NewsProps) => {
             </p>
           </div>
         </div>
+
+        {isDetail && (
+          <div className="news-cmt mt-24px">
+            <hr />
+            <Comment
+              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+              content={
+                <>
+                  <Form.Item>
+                    <TextArea rows={4}  />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button htmlType="submit" type="primary">
+                      Add Comment
+                    </Button>
+                  </Form.Item>
+                </>
+              }
+            />
+            <CommentCustom tabIndex={news.tin_tuc_id + "1"} />
+            <CommentCustom tabIndex={news.tin_tuc_id + "2"} />
+          </div>
+        )}
       </div>
     </div>
   );

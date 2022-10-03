@@ -16,7 +16,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props) => {
   return (
     <div className="bg-bg-primary min-h-[100vh]" data-theme={theme}>
       <Header />
-      <main className="flex sm:container sm:mx-auto">
+      <main className="flex sm:container sm:mx-auto min-h-screen">
         <LeftBar />
         <div className="flex-1 content">
           {props.children}
