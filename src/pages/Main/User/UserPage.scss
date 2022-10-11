@@ -6,13 +6,13 @@
   }
 
   &-avatar {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     overflow: hidden;
-    // box-shadow: 0 0 8px #ccc;
+    box-shadow: 0 0 8px var(--box-shadow);
     grid-column: 1 / span 1;
-    outline: 4px solid var(--blue);
+    // outline: 4px solid var(--blue);
 
     img {
       height: 100%;
@@ -22,5 +22,36 @@
 
   &-contact {
     grid-column: 2 / span 1;
+  }
+
+  .camera {
+    box-shadow: 0 0 4px var(--box-shadow);
+    padding: 4px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    &:hover {
+      background-color: rgba($color: #fff, $alpha: 0.8);
+    }
+
+    input {
+      opacity: 0;
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .camera-icon {
+      transform: translate(3px, -4px);
+    }
+  }
+
+  .view-mode {
+    box-shadow: 0 0 4px var(--box-shadow);
+  }
+ 
+  .news {
+    margin-bottom: 16px;
   }
 }

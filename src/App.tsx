@@ -1,8 +1,10 @@
+import { postApi } from "api/postApi";
 import { userApi } from "api/userApi";
 import Dialog from "components/Dialog/Dialog";
 import { useAppDispatch, useAppSelector } from "hooks/hook";
 import React, { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { setCategories } from "reducers/categoryReducer";
 import { setUserInfo } from "reducers/userReducer";
 import routes from "routes/routes";
 import "./App.css";
@@ -14,16 +16,19 @@ function App() {
 
   useEffect(() => {
     if (user && user.nhan_vien_id) {
-      
       userApi.getUser(user.nhan_vien_id).then((res) => {
         dispatch(setUserInfo(res.data));
       });
     }
+
+    postApi.getCategories().then((res) => {
+      dispatch(setCategories(res.data));
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="App">
+    <div className="App" data-theme="light">
       <Routes>
         {/* <Route path='/log/*' element={token ? <Navigate to={'/'} replace /> : <LoginPage />}/>
         <Route path='/admin/*' element={<AdminPage />}/>

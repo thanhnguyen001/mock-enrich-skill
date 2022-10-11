@@ -3,12 +3,15 @@ import { postApi } from "api/postApi";
 import { useAppSelector } from "hooks/hook";
 import { INewsCategory } from "models";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LeftBar.scss";
 
 const LeftBar = () => {
-  const [categories, setCategories] = useState<INewsCategory[]>([]);
   const { leftBar } = useAppSelector((state) => state.layout);
+  const navigate = useNavigate();
+  // State
+  const [categories, setCategories] = useState<INewsCategory[]>([]);
+  const [view, setView] = useState('home');
 
   useEffect(() => {
     handleGetCategories();
@@ -23,23 +26,28 @@ const LeftBar = () => {
     }
   };
 
+  const handleChangeView = (val: string) => {
+    setView(val);
+    navigate(`${val === 'home' ? '/' : `/categories/${val}`}`);
+  }
+
   return (
     <div id="left-bar" className={`w-[240px] ${leftBar}`}>
       <div className="categories sticky">
         <ul className="list">
-          <li className="category px-[8px] py-4px flex items-center cursor-pointer" title={"Trang chủ"}>
-            <Link to="/" className="flex items-center text-[20px]">
+          <li className={`category px-[8px] py-4px flex items-center cursor-pointer ${view === 'home' ? 'active' : ''}`} title={"Trang chủ"}>
+            <div onClick={() => handleChangeView('home')} className="flex items-center text-[20px]">
               <HomeFilled style={{ color: "red" }} />
               {leftBar === 'normal' && <div className="category-name ml-8px text-tx-color">Trang chủ</div>}
-            </Link>
+            </div>
           </li>
           {categories.map((item, index) => {
             return (
-              <li key={index} className="category px-[8px] py-4px flex items-center cursor-pointer" title={item.ten_nhom}>
-                <Link to={"/"} className="flex items-center text-[20px]">
+              <li key={index} className={`${view === item.ten_nhom ? 'active' : ''} category px-[8px] py-4px flex items-center cursor-pointer`} title={item.ten_nhom}>
+                <div onClick={() => handleChangeView(`${item.ten_nhom}`)} className="flex items-center text-[20px]">
                   <DingtalkCircleFilled />
                   {leftBar === 'normal' && <div className="category-name ml-8px text-tx-color">{item.ten_nhom}</div>}
-                </Link>
+                </div>
               </li>
             );
           })}

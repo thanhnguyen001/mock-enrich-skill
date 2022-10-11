@@ -64,7 +64,7 @@ const News: React.FC<NewsProps> = (props: NewsProps) => {
               />
               <div className="news-author-name ml-8px">
                 <p className="font-bold text-[16px] text-tx-color name cursor-pointer">{news.nguoi_tao}</p>
-                {news.ngay_sua && <p className="opacity-70 text-[12px] text-tx-color">{calculateCreatedTime(news.ngay_sua)}</p>}
+                {news.ngay_tao && <p className="opacity-70 text-[12px] text-tx-color">{calculateCreatedTime(news.ngay_tao)}</p>}
               </div>
             </div>
           )}

@@ -1,3 +1,5 @@
+import { tree } from "constants/tree";
+
 export const calculateCreatedTime = (createdAt: string): string => {
   const createdDate = new Date(createdAt);
   const current = new Date();
@@ -28,7 +30,6 @@ export const calculateCreatedTime = (createdAt: string): string => {
   return result;
 };
 
-
 /**
  *
  * @param path ex: something/:name/:abc?search={search}&page={page}
@@ -43,7 +44,7 @@ export function buildApi<T, D>(path: string, params: T | null = null, queries: D
   const queryKey = queryPath?.split("&").map((item) => item.split("=")[0]);
 
   if (params) {
-    paramKey.forEach((item) => {
+    paramKey?.forEach((item) => {
       const key = item.replace(":", "");
       const value = params[key as keyof typeof params] as string;
       paramPath = paramPath.replace(item, value);
@@ -52,7 +53,7 @@ export function buildApi<T, D>(path: string, params: T | null = null, queries: D
 
   if (queries) {
     queryPath = "";
-    queryKey.forEach((item, index) => {
+    queryKey?.forEach((item, index) => {
       const value = queries[item as keyof typeof queries];
       queryPath += `${index > 0 ? "&" : ""}${item}=${value}`;
     });
@@ -62,3 +63,26 @@ export function buildApi<T, D>(path: string, params: T | null = null, queries: D
 
   return api;
 }
+
+export const hashBreadcrumb = (currentRouteList: string[]) => {
+  const list = [];
+  let i = 0;
+  let piece: any = null;
+  let path = "";
+  while (i < currentRouteList.length) {
+    let item = currentRouteList[i];
+    path = path + "/" + item;
+    if (i === 0) {
+      piece = tree[item];
+    } else {
+      piece = piece ? piece[item] : null;
+    }
+    if (piece?.title) {
+      list.push({ title: piece?.title, path: path });
+    } else {
+      break;
+    }
+    i++;
+  }
+  return list;
+};

@@ -15,7 +15,11 @@ export const userApi = {
     return axiosClient.post<IResRegUser>(pathApi.user.login, body, { signal: cancelReqUser.signal });
   },
   getUser: (id: string) => {
-    const api = buildApi(pathApi.user.getUser, { id });
+    const api = buildApi(pathApi.user.getUser, { id }, { signal: cancelReqUser.signal });
     return axiosClient.get<IUser>(api);
   },
+  updateUser: (body: IUser) => {
+    const api = buildApi(pathApi.user.update, { id: body.nhan_vien_id });
+    return axiosClient.put<IResRegUser>(api, body, { signal: cancelReqUser.signal });
+  }
 };

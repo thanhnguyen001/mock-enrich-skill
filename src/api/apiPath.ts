@@ -2,7 +2,8 @@ const pathApi = {
     user: {
         register: '/user/regUser',
         login: '/user/login',
-        getUser: '/user/:id'
+        getUser: '/user/:id',
+        update: '/user/:id'
     },
     post: {
         list: '/posts',

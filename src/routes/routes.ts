@@ -6,15 +6,18 @@ import MainPage from "pages/Main/MainPage";
 import HomePage from "pages/Main/Home/HomePage";
 import { store } from "reducers/store";
 import DetailNews from "pages/Main/DetailNews/DetailNews";
+import UserManagement from "pages/Admin/components/UserManagement/UserManagement";
+import PostManagement from "pages/Admin/components/PostManagement/PostManagement";
+import Dashboard from "pages/Admin/components/Dashboard/Dashboard";
 
 const routes = [
   {
     path: "/log/*",
     element: LoginPage,
-    canActive: store.getState().token ? '/' : '',
+    canActive: store.getState().token ? "/" : "",
   },
   {
-    path: "/admin",
+    path: "/admin/*",
     element: AdminPage,
   },
   {
@@ -39,7 +42,26 @@ export const customerRoutes = [
     element: DetailNews,
   },
   {
+    path: "/categories/:category",
+    element: HomePage,
+  },
+  {
     path: "/:userId",
     element: UserPage,
+  },
+];
+
+export const adminRoutes = [
+  {
+    path: "/dashboard",
+    element: Dashboard,
+  },
+  {
+    path: "/user-management",
+    element: UserManagement,
+  },
+  {
+    path: "/post-management",
+    element: PostManagement,
   },
 ];

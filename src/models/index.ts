@@ -15,6 +15,11 @@ export interface ILayout {
   rightBar?: "small" | "normal" | "none";
 }
 
+export interface IBreadcrumb {
+  path: string;
+  title: string;
+}
+
 // User's models
 //#region
 export interface IReqRegUser {
@@ -75,6 +80,7 @@ export interface INews {
   ngay_tao?: string;
   nguoi_sua?: string;
   ngay_sua?: string;
+  nhom_tin_tuc_id?: number;
 }
 
 export interface INewsCategory {
@@ -92,3 +98,5 @@ export interface INewsCategory {
 }
 
 //#endregion
+
+
