@@ -3,7 +3,8 @@ const pathApi = {
         register: '/user/regUser',
         login: '/user/login',
         getUser: '/user/:id',
-        update: '/user/:id'
+        update: '/user/:id',
+        getListUser: '/users'
     },
     post: {
         list: '/posts',
@@ -11,6 +12,9 @@ const pathApi = {
         getCategories: '/post-categories',
         postCategory: '/post-category',
         getCategory: '/post-category/:id'
+    },
+    media: {
+        uploadFile: '/media'
     }
 };
 export default pathApi;

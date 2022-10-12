@@ -13,7 +13,7 @@ const LeftBar: React.FC = () => {
       <div className="logo px-[4px] py-[4px] text-[20px] rounded">
         <p className="font-bold m-0">NEWS</p>
       </div>
-      <div className="left-menu">
+      <div className="left-menu mt-16px">
         <ul className="flex flex-col">
           <li className="w-full flex items-center cursor-pointer h-40px text-[20px]">
             <NavLink to="/admin/dashboard" className={({ isActive }) => handleActiveRoute(isActive)}>

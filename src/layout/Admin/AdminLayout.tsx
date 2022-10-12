@@ -9,13 +9,13 @@ type AdminLayoutProps = {
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   return (
-    <div className="ad-layout flex">
-      <div className="ad-left-bar">
+    <div className="adm-layout flex">
+      <div className="adm-left-bar">
         <LeftBar />
       </div>
-      <div className="">
+      <div className="flex-1">
         <Header />
-        <main className="ad-content">{children}</main>
+        <div className="adm-content">{children}</div>
       </div>
     </div>
   );

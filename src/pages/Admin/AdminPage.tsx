@@ -7,7 +7,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 
 const AdminPage: React.FC = () => {
   return (
-    <div className="ad-page">
+    <div className="adm-page">
       <AdminLayout>
         <Routes>
           <Route path="/" element={<Dashboard />} />

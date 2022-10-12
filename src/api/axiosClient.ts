@@ -15,7 +15,7 @@ const axiosClient = axios.create({
   // timeout: 1000,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${localStorage.getItem(storageKey.token)}`,
+    Authorization: `Bearer ${localStorage.getItem(storageKey.token)?.replace(/"/g, '')}`,
   },
 });
 
@@ -26,7 +26,7 @@ axiosClient.interceptors.request.use(
     const token = localStorage.getItem(storageKey.token);
     if (token) {
       //@ts-ignore
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token.replace(/"/g, '')}`;
       // console.log(token)
       localStorage.setItem(storageKey.token, token);
     }

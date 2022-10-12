@@ -1,11 +1,11 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 
 [data-theme="light"] {
     --primary-color: #0aa679;
     --bg-primary-color: #f5f5f5;
     --text-color: black;
     --bg-skeleton: white;
-    --bg-shimmer: rgba(0,0,0,0.3);
+    --bg-shimmer: rgba(0, 0, 0, 0.3);
     --box-shadow: #848484;
 }
 
@@ -15,7 +15,6 @@
     --text-color: #fffff2;
     --bg-skeleton: #ccc;
     --box-shadow: #e1e1e1;
-
 }
 
 :root {
@@ -33,4 +32,23 @@ p {
     border-top: 1px solid var(--text-color);
     opacity: 0.8;
     width: 100%;
+}
+
+.status {
+    display: inline-block;
+    padding: 2px 4px;
+    border-radius: 3px;
+    background-color: #ccc;
+
+    &-active {
+        background-color: rgb(28, 220, 28);
+    }
+
+    &-inactive {
+        background-color: rgb(225, 30, 30);
+    }
+}
+
+.avatar {
+    border-radius: 50%;
 }

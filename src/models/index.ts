@@ -99,4 +99,24 @@ export interface INewsCategory {
 
 //#endregion
 
-
+// Media
+//#region 
+export interface IUploadFileRes {
+  body?: {
+    bucket: string;
+    folder: string;
+  };
+  bodyForm: {
+    loai_teo_tin: string;
+    mo_ta: string;
+    nguoi_tao: string;
+    nhom_tep_tin_id: string;
+    tep_tin_id: string;
+    tep_tin_url: string;
+    tieu_de: string;
+  },
+  fileUrl: string;
+  tep_tin_id: string;
+  success: boolean;
+  exe_time: number;
+}
