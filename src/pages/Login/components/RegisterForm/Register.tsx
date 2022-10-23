@@ -55,7 +55,7 @@ const Register = () => {
   const onFinish = (formBody: IReqRegUser) => {
     setIsLoading(true);
     userApi.postUser({ ...formBody }).then((res) => {
-      if (res.data.data) {
+      if (res.data) {
         dispatch(setUserInfo(res.data));
         dispatch(login(res.data.token));
         navigate(routePath.home.path);

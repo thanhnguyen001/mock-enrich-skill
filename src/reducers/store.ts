@@ -1,4 +1,6 @@
+import authorUserReducer from './authorUserReducer';
 import { configureStore } from "@reduxjs/toolkit";
+import adminReducer from "./adminReducer";
 import categoryReducer from "./categoryReducer";
 import dialogReducer from "./dialogReducer";
 import layoutReducer from "./layoutReducer";
@@ -15,7 +17,9 @@ export const store = configureStore({
     theme: themeReducer,
     news: newsReducer,
     layout: layoutReducer,
-    category: categoryReducer
+    category: categoryReducer,
+    admin: adminReducer,
+    authUser: authorUserReducer
   },
 });
 

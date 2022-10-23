@@ -1,15 +1,29 @@
-import { Table } from "antd";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { Space, Table, DatePicker, Button } from "antd";
 import { postApi } from "api/postApi";
 import LoadingAdmin from "components/LoadingAdmin/LoadingAdmin";
 import { BASE_API_GET_IMG } from "constants/constant";
-import { INews, IResponseData } from "models";
-import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "hooks/hook";
+import { INews, INewsQueries, IResponseData } from "models";
+import Filter from "pages/Admin/components/Filter/Filter";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { show } from "reducers/dialogReducer";
 
 const { Column } = Table;
 
 const PostManagement: React.FC = () => {
+  // Router
+  const navigate = useNavigate();
+
+  // Redux
+  const dispatch = useAppDispatch();
+  const listCategory = useAppSelector((state) => state.category).list;
+
+  // State
   const [listPost, setListPost] = useState<INews[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const queries = useRef<INewsQueries>();
 
   useEffect(() => {
     getListPost();
@@ -18,7 +32,7 @@ const PostManagement: React.FC = () => {
   const getListPost = async () => {
     setIsLoading(true);
     try {
-      const res = (await postApi.getPosts()) as IResponseData<INews[]>;
+      const res = (await postApi.getPosts(queries.current)) as IResponseData<INews[]>;
       if (res.data) {
         const newList = res.data.map((item, index) => {
           return { ...item, key: index };
@@ -32,13 +46,53 @@ const PostManagement: React.FC = () => {
     }
   };
 
+  const handleDeleteUserById = async (index: number, id?: string) => {
+    if (!id) return;
+    try {
+      const res = (await postApi.deletePostById(id)) as IResponseData<null>;
+      if (res.success) {
+        dispatch(
+          show({
+            type: "notify",
+            msg: "Xóa thành công",
+            isShow: true,
+            title: "",
+          })
+        );
+        const newList = [...listPost];
+        newList.splice(index, 1);
+        setListPost(newList);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleMoveToEditPage = (type: string, id?: string) => {
+    if (!id) return;
+    navigate(`/admin/post-management/${type}/${id}`);
+  };
+
+  const handleSearchFilter = (val: any) => {
+    console.log(val);
+    queries.current = { ...val };
+    getListPost();
+  };
+
   return (
     <div className="post-management">
-      <div className="filter"></div>
+      <div className="">
+        <Filter onFilter={handleSearchFilter} isPost={true} />
+        <div className="flex justify-end px-16px mb-16px">
+          <Button className="flex items-center mt-[0px]" type="primary">
+            <Link to="add">Thêm bài viết</Link>
+          </Button>
+        </div>
+      </div>
       <div className="content px-16px">
         {isLoading && <LoadingAdmin />}
         {listPost.length && (
-          <Table dataSource={listPost}>
+          <Table dataSource={listPost} pagination={{ pageSize: 100, pageSizeOptions: ["30", "50", "100"] }}>
             <Column
               title="Ảnh đại diện"
               dataIndex="anh_dai_dien"
@@ -61,10 +115,68 @@ const PostManagement: React.FC = () => {
                   } else return -1;
                 } else return 1;
               }}
+              render={(text, record, index) => {
+                return (
+                  <div className="relative action-wrapper">
+                    <span>{text}</span>
+                    <ul className="absolute m-0 p-0 flex items-center w-full top-[-24px] left-[0px] hidden action">
+                      <li
+                        className="text-[green] mr-16px cursor-pointer"
+                        onClick={() => handleMoveToEditPage("detail", listPost[index].tin_tuc_id)}
+                      >
+                        <EyeOutlined />
+                      </li>
+                      <li
+                        className="text-[black] mr-16px cursor-pointer"
+                        onClick={() => handleMoveToEditPage("edit", listPost[index].tin_tuc_id)}
+                      >
+                        <EditOutlined />
+                      </li>
+                      <li
+                        className="text-[red] cursor-pointer"
+                        onClick={() => handleDeleteUserById(index, listPost[index].tin_tuc_id)}
+                      >
+                        <DeleteOutlined />
+                      </li>
+                    </ul>
+                  </div>
+                );
+              }}
             />
-            <Column title="Tên đăng nhập" dataIndex="ten_tai_khoan" key="ten_tai_khoan" />
-            <Column title="Email" dataIndex="email" key="email" />
+            {listCategory.length > 0 && (
+              <Column
+                title="Nhóm tin tức"
+                dataIndex="nhom_tin_tuc_id"
+                key="nhom_tin_tuc_id"
+                render={(value: number) => {
+                  const index = listCategory.findIndex((item) => item.nhom_tin_tuc_id === value);
+                  if (index < 0) return 0;
+                  return <span>{listCategory[index].ten_nhom}</span>;
+                }}
+              />
+            )}
             <Column
+              title="Tin nổi bật"
+              dataIndex="tin_noi_bat"
+              key="tin_noi_bat"
+              render={(val) => {
+                if (`${val}` === "1") {
+                  return "Có";
+                } else return "Không";
+              }}
+            />
+            <Column
+              title="Tin nổi bật"
+              dataIndex="tin_moi"
+              key="tin_moi"
+              render={(val) => {
+                if (`${val}` === "1") {
+                  return "Có";
+                } else return "Không";
+              }}
+            />
+            <Column
+              className="min-w-[150px]"
               title="Trạng thái"
               dataIndex="trang_thai"
               key="trang_thai"
@@ -74,6 +186,18 @@ const PostManagement: React.FC = () => {
                 ) : (
                   <span className="status status-inactive">Bị khóa</span>
                 );
+              }}
+            />
+            <Column
+              title="Ngày tạo"
+              dataIndex="ngay_tao"
+              key="ngay_tao"
+              sorter={(a: INews, b: INews) => {
+                return a && b && a.ngay_tao && b.ngay_tao && a.ngay_tao <= b.ngay_tao ? 1 : -1;
+              }}
+              render={(date: string) => {
+                const d = new Date(date);
+                return `${d.getUTCHours()}:${d.getUTCMinutes()} ${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}`;
               }}
             />
           </Table>

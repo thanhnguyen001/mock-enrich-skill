@@ -1,8 +1,67 @@
 .adm-page {
   min-height: 100vh;
-  width: 100vw;
+
+  .mr-16 {
+    margin-right: 16px;
+  }
 }
 
 // User management
-// .user-management {
-// }
+.user-management-page {
+  .bg-cancel {
+    background-color: #d62020;
+
+    &:hover {
+      color: #fff;
+      border-color: #e24747;
+      background: #e24747;
+    }
+    &:focus {
+      border-color: #e24747;
+      background: #e24747;
+    }
+  }
+  .user-management {
+    overflow: hidden;
+
+    .action-wrapper {
+      &:hover {
+        .action {
+          display: flex;
+        }
+      }
+    }
+  }
+}
+
+// post-management
+.post-management-page {
+  .bg-cancel {
+    background-color: #d62020;
+
+    &:hover {
+      color: #fff;
+      border-color: #e24747;
+      background: #e24747;
+    }
+    &:focus {
+      border-color: #e24747;
+      background: #e24747;
+    }
+  }
+  .post-management {
+    overflow: hidden;
+
+    .action-wrapper {
+      &:hover {
+        .action {
+          display: flex;
+        }
+      }
+    }
+  }
+}
+
+.filter {
+  gap: 16px;
+}

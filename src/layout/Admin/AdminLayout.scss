@@ -1,10 +1,68 @@
 .adm-layout {
-  min-width: 100vh;
+  // min-width: 100vh;
+
+  .adm-header {
+    .header-user {
+      position: relative;
+      &-avatar {
+        // width: var(--width-avatar);
+        // height: var(--height-avatar);
+        border-radius: 50%;
+        box-shadow: 0 0 8px #000;
+        overflow: hidden;
+        margin-right: 8px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      &-logout {
+        .icon {
+          margin-top: 2px;
+          transition: all 0.2s linear;
+        }
+        .icon.active {
+          transform: rotateZ(-90deg);
+
+          & ~ .header-user-action {
+            display: block;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 5px;
+            padding: 2px 8px;
+            cursor: pointer;
+            color: white;
+
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.6);
+            }
+          }
+        }
+      }
+
+      &-action {
+        display: none;
+        position: absolute;
+        transition: all 0.2s ease-in-out;
+      }
+    }
+  }
 
   .adm-left-bar {
-    height: 100vh;
+    min-height: 100vh;
     background-color: rgb(29, 129, 157);
     width: 250px;
+    transition: all 0.1s linear;
+    .close-left-bar {
+      display: none;
+    }
+
+    &-wrap {
+      background-color: rgb(29, 129, 157);
+    }
 
     .logo {
       p {
@@ -27,6 +85,83 @@
       li a.active {
         background-color: rgba(228, 227, 227, 0.8);
       }
+    }
+  }
+
+  .adm-body {
+    max-width: calc(100vw - 250px);
+  }
+
+  .ant-table-content {
+    overflow-x: auto;
+  }
+  .tab-bar {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 577px) {
+  .adm-layout {
+    .adm-left-bar {
+      width: 68px;
+
+      .logo {
+        font-size: 16px;
+      }
+
+      .left-menu-text {
+        display: none;
+      }
+
+      .left-menu-link {
+        justify-content: center;
+      }
+    }
+
+    .adm-body {
+      max-width: max-content !important;
+      overflow: hidden;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .adm-layout {
+    .tab-bar {
+      display: block;
+    }
+    .adm-left-bar {
+      position: fixed;
+      width: 100vw;
+      z-index: 10;
+      background-color: rgba(0, 0, 0, 0.5);
+      left: -120%;
+      transition: all 0.2s linear;
+
+      .close-left-bar {
+        display: block;
+        position: absolute;
+        top: 0px;
+        right: 32px;
+        font-size: 28px;
+        z-index: 11;
+        cursor: pointer;
+      }
+
+      &-wrap {
+        width: 250px;
+        height: 100vh;
+      }
+
+      &.active-mobile {
+        width: 100vw;
+        left: 0;
+      }
+    }
+    .adm-body {
+      max-width: 100%;
+      width: 100% !important;
+      overflow: hidden;
     }
   }
 }

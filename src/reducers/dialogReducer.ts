@@ -5,11 +5,15 @@ const initialState: {
   msg: string;
   isShow: boolean;
   title: string;
+  redirect?: string;
+  useDialog: boolean;
 } = {
   type: "notify",
   msg: "",
   isShow: false,
   title: "",
+  redirect: '/',
+  useDialog: true
 };
 
 export const dialogSlice = createSlice({
@@ -17,6 +21,9 @@ export const dialogSlice = createSlice({
   initialState,
   reducers: {
     show: (state, action) => {
+      if (!action.payload.useDialog) {
+        action.payload.useDialog = true;
+      }
       return (state = action.payload);
     },
   },

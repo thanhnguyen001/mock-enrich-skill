@@ -1,25 +1,36 @@
-import { Table } from "antd";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Table } from "antd";
 import { userApi } from "api/userApi";
 import LoadingAdmin from "components/LoadingAdmin/LoadingAdmin";
-import Skeleton from "components/Skeleton/Skeleton";
 import { BASE_API_GET_IMG } from "constants/constant";
-import { IResponseData, IUser } from "models";
+import { useAppDispatch } from "hooks/hook";
+import { INewsQueries, IResponseData, IUser } from "models";
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { show } from "reducers/dialogReducer";
+import Filter from "../../../../components/Filter/Filter";
 
 const { Column } = Table;
 
 const UserManagement: React.FC = () => {
+  //Router
+  const navigate = useNavigate();
+
+  //State
   const [listUser, setListUser] = useState<IUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  //Redux
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     getListUser();
   }, []);
 
-  const getListUser = async () => {
+  const getListUser = async (queries?: INewsQueries) => {
     setIsLoading(true);
     try {
-      const res = (await await userApi.getListUser()) as IResponseData<IUser[]>;
+      const res = (await await userApi.getListUser(queries)) as IResponseData<IUser[]>;
       if (res.data) {
         const newList = res.data.map((item, index) => {
           return { ...item, key: index };
@@ -32,14 +43,60 @@ const UserManagement: React.FC = () => {
     }
   };
 
+  const handleFilter = (filter: INewsQueries) => {
+    getListUser(filter);
+  };
+
+  const handleDeleteUserById = async (index: number, id?: string) => {
+    if (!id) return;
+    try {
+      const res = (await userApi.deleteUserById(id)) as IResponseData<null>;
+      if (res.success) {
+        dispatch(
+          show({
+            type: "notify",
+            msg: "Xóa thành công",
+            isShow: true,
+            title: "",
+          })
+        );
+        const newList = [...listUser];
+        newList.splice(index, 1);
+        setListUser(newList);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleMoveToEditPage = (type: string, id?: string) => {
+    if (!id) return;
+    navigate(`/admin/user-management/${type}/${id}`);
+  };
+
   return (
     <div className="user-management">
-      <div className="filter"></div>
+      <Filter onFilter={handleFilter} />
+      <div className="flex justify-end px-16px">
+        <Button className="flex items-center mt-[0px]" type="primary">
+          <Link to="add">Thêm thành viên</Link>
+        </Button>
+      </div>
       <div className="content px-16px">
         {isLoading && <LoadingAdmin />}
-        {listUser.length && (
-          <Table dataSource={listUser}>
+        {!listUser.length && <div className="text-center mt-16px">Chưa có tài khoản nào</div>}
+        {listUser.length > 0 && (
+          <Table dataSource={listUser} pagination={{ pageSize: 25, position: ["topRight", "bottomRight"] }}>
             <Column
+              title=""
+              dataIndex="nhan_vien_id"
+              key="nhan_vien_id"
+              render={(id: string) => {
+                return <Checkbox />;
+              }}
+            />
+            <Column
+              className="min-w-[100px]"
               title="Ảnh đại diện"
               dataIndex="anh_dai_dien"
               key="anh_dai_dien"
@@ -59,19 +116,62 @@ const UserManagement: React.FC = () => {
                   return 1;
                 } else return -1;
               }}
+              render={(text, record, index) => {
+                return (
+                  <div className="relative action-wrapper">
+                    <span>{text}</span>
+                    <ul className="absolute m-0 p-0 flex items-center w-full top-[-24px] left-[0px] hidden action">
+                      <li className="text-[green] mr-16px cursor-pointer" onClick={() => handleMoveToEditPage('detail', listUser[index].nhan_vien_id)}>
+                        <EyeOutlined />
+                      </li>
+                      <li className="text-[black] mr-16px cursor-pointer" onClick={() => handleMoveToEditPage('edit', listUser[index].nhan_vien_id)}>
+                        <EditOutlined />
+                      </li>
+                      <li
+                        className="text-[red] cursor-pointer"
+                        onClick={() => handleDeleteUserById(index, listUser[index].nhan_vien_id)}
+                      >
+                        <DeleteOutlined />
+                      </li>
+                    </ul>
+                  </div>
+                );
+              }}
             />
             <Column title="Tên đăng nhập" dataIndex="ten_tai_khoan" key="ten_tai_khoan" />
             <Column title="Email" dataIndex="email" key="email" />
             <Column
+              className="min-w-[100px]"
+              title="Nhóm tài khoản"
+              dataIndex="nhom_nhan_vien"
+              key="nhom_nhan_vien"
+              render={(value) => {
+                return value?.ten_nhom ? <span>{value.ten_nhom}</span> : "--";
+              }}
+            />
+            <Column
+              className="min-w-[150px]"
               title="Trạng thái"
               dataIndex="trang_thai"
               key="trang_thai"
               render={(trang_thai: string) => {
                 return trang_thai === "active" ? (
-                  <span className="status status-active">Đang hoạt động</span>
+                  <span className="status text-white status-active">Đang hoạt động</span>
                 ) : (
-                  <span className="status status-inactive">Bị khóa</span>
+                  <span className="status text-white status-inactive">Bị khóa</span>
                 );
+              }}
+            />
+            <Column
+              title="Ngày tạo"
+              dataIndex="ngay_tao"
+              key="ngay_tao"
+              sorter={(a: IUser, b: IUser) => {
+                return a && b && a.ngay_tao && b.ngay_tao && a.ngay_tao <= b.ngay_tao ? 1 : -1;
+              }}
+              render={(date: string) => {
+                const d = new Date(date);
+                return `${d.getUTCHours()}:${d.getUTCMinutes()} ${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}`;
               }}
             />
           </Table>

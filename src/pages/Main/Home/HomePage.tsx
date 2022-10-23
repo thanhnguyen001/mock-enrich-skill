@@ -5,30 +5,32 @@ import SkeletonAvatar from "components/Skeleton/SkeletonAvatar";
 import { useAppSelector } from "hooks/hook";
 import { INews } from "models";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import "./HomePage.scss";
 
 const HomePage: React.FC = (props) => {
-  const { category } = useParams();
   //Redux
   const categories = useAppSelector((state) => state.category);
   //State
   const [newsList, setNewsList] = useState<INews[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isAllList, setIsAllList] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [view, setView] = useState("normal");
+  const [viewPriority, setViewPriority] = useState("normal");
 
   useEffect(() => {
     // get list news
     getListNews();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [view, category]);
+  }, [viewPriority, categories?.currentCategory?.nhom_tin_tuc_id]);
 
   const getListNews = async () => {
     setIsLoading(true);
     try {
-      let { data } = await postApi.getPosts();
-      if (view !== "normal") {
+      const query = {
+        categories: categories?.currentCategory?.nhom_tin_tuc_id ? categories.currentCategory.nhom_tin_tuc_id : "",
+      };
+      let { data } = await postApi.getPosts(query);
+      if (viewPriority !== "normal") {
         data.sort((a, b) => {
           if (a.ngay_tao && b.ngay_tao && a.ngay_tao <= b.ngay_tao) {
             return 1;
@@ -37,12 +39,7 @@ const HomePage: React.FC = (props) => {
           }
         });
       }
-      if (category) {
-        const categoryIndex = categories.findIndex((item) => item.ten_nhom === category);
-        if (categoryIndex > -1) {
-          data = data.filter((item) => item.nhom_tin_tuc_id === categories[categoryIndex].nhom_tin_tuc_id);
-        }
-      }
+
       setNewsList(data);
 
       setIsLoading(false);
@@ -52,17 +49,20 @@ const HomePage: React.FC = (props) => {
   };
 
   const handleChangeView = (val: string) => {
-    setView(val);
+    setViewPriority(val);
     setIsLoading(true);
   };
 
   return (
     <div className="home  mx-auto">
       <div className="home-heading flex items-center mb-16px">
-        <div onClick={() => handleChangeView("normal")} className={`display mr-16px ${view === "normal" ? "active" : ""}`}>
+        <div
+          onClick={() => handleChangeView("normal")}
+          className={`display mr-16px ${viewPriority === "normal" ? "active" : ""}`}
+        >
           Relevant
         </div>
-        <div onClick={() => handleChangeView("latest")} className={`display ${view === "latest" ? "active" : ""}`}>
+        <div onClick={() => handleChangeView("latest")} className={`display ${viewPriority === "latest" ? "active" : ""}`}>
           Latest
         </div>
       </div>

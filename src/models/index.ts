@@ -84,17 +84,27 @@ export interface INews {
 }
 
 export interface INewsCategory {
-  nhom_tin_tuc_id?: string;
+  nhom_tin_tuc_id?: number;
   uniqueItems: string;
   ten_nhom: string;
   mo_ta?: string;
   anh_dai_dien?: string;
-  nhom_cha_id?: string;
+  nhom_cha_id?: number;
   trang_thai?: string;
   nguoi_tao?: string;
   ngay_tao?: string;
   nguoi_sua?: string;
   ngay_sua?: string;
+}
+
+export interface INewsQueries {
+  keyword?: string;
+  status?: string;
+  startDate?: string;
+  endDate?: string;
+  categories?: string;
+  page?: number;
+  loading?: true;
 }
 
 //#endregion

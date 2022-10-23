@@ -2,8 +2,10 @@ import { postApi } from "api/postApi";
 import { userApi } from "api/userApi";
 import Dialog from "components/Dialog/Dialog";
 import { useAppDispatch, useAppSelector } from "hooks/hook";
+import NotFoundPage from "pages/NotFound/NotFoundPage";
 import React, { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { saveUserCategories } from "reducers/authorUserReducer";
 import { setCategories } from "reducers/categoryReducer";
 import { setUserInfo } from "reducers/userReducer";
 import routes from "routes/routes";
@@ -34,13 +36,14 @@ function App() {
         <Route path='/admin/*' element={<AdminPage />}/>
         <Route path='/*' element={<MainPage />}/>
         <Route path='*' element={<NotFoundPage />}/> */}
-
         {routes.map((item, index) => {
           const Page = item.element;
           return (
             <Route key={index} path={item.path} element={item.canActive ? <Navigate to={item.canActive} replace /> : <Page />} />
           );
         })}
+        <Route path="*" element={<NotFoundPage />} />
+
       </Routes>
       <Dialog />
     </div>
