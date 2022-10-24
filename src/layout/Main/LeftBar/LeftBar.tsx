@@ -58,7 +58,7 @@ const LeftBar = () => {
               {leftBar === "normal" && <div className="category-name ml-8px text-tx-color">Trang chủ</div>}
             </div>
           </li>
-          {categories.list.map((item, index) => {
+          {categories.list?.map((item, index) => {
             return (
               <li
                 key={index}
