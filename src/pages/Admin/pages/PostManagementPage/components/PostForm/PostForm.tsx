@@ -55,15 +55,12 @@ const PostForm: React.FC = () => {
   const handleEditChange = (e: React.FormEvent<HTMLElement>) => {
     const value = e.currentTarget.innerHTML;
     if (value) {
-      console.log(value);
-
       setContent(value);
     }
   };
 
   const handleFinish = (value: any) => {
     const body = { ...value, noi_dung: content, tin_moi: value.tin_moi ? 1 : 0, tin_noi_bat: value.tin_noi_bat ? 1 : 0 };
-    console.log(body);
 
     postApi.createPost(body).then((res) => {
       dispatch(
