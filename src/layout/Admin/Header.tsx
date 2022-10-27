@@ -96,9 +96,9 @@ const Header: React.FC = () => {
               <p className="m-0 font-semibold">{user.ten_nhan_vien}</p>
             </Link>
             <div className="header-user-logout flex">
-              <CaretDownOutlined className="ml-4px cursor-pointer icon" onClick={(e) => handleOpenLogout(e)} />
-              <div className="header-user-action">
-                <p className="" onClick={handleLogout}>
+              <CaretDownOutlined className="ml-4px cursor-pointer icon z-[100]" onClick={(e) => handleOpenLogout(e)} />
+              <div className="header-user-action" onClick={handleLogout}>
+                <p className="" >
                   Log out
                 </p>
               </div>

@@ -55,3 +55,19 @@
     margin-bottom: 16px;
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .user-info  {
+    flex-direction: column;
+
+    .user-intro {
+      width: 100%;
+    }
+
+    .user-post {
+      width: 100%;
+      margin-top: 16px;
+      margin-left: 0;
+    }
+  }
+}

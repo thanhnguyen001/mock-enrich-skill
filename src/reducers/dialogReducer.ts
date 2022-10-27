@@ -20,7 +20,7 @@ export const dialogSlice = createSlice({
   name: "dialog",
   initialState,
   reducers: {
-    show: (state, action) => {
+    show: (state: any, action: { payload: any; }) => {
       if (!action.payload.useDialog) {
         action.payload.useDialog = true;
       }

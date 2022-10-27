@@ -3,11 +3,12 @@ import LoadingAdmin from "components/LoadingAdmin/LoadingAdmin";
 import { useAppDispatch, useAppSelector } from "hooks/hook";
 import AdminLayout from "layout/Admin/AdminLayout";
 import React, { Suspense, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { saveUserCategories } from "reducers/authorUserReducer";
 import { adminRoutes } from "routes/routes";
 import "./AdminPage.scss";
 import Dashboard from "./components/Dashboard/Dashboard";
+import UserManagementPage from "./pages/UserManagementPage/UserManagementPage";
 
 const AdminPage: React.FC = () => {
   //Router
@@ -33,7 +34,7 @@ const AdminPage: React.FC = () => {
       <AdminLayout>
         <Suspense fallback={<LoadingAdmin />}>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Navigate to="/admin/user-management" replace />} />
             {adminRoutes.map((item, index) => {
               const Page = item.element;
               return <Route key={index} path={item.path} element={<Page />} />;

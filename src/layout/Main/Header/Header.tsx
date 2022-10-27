@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Header.scss";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,6 +12,10 @@ const Header: React.FC = (props: any) => {
   const user = useAppSelector((state) => state.user);
   const dispacth = useAppDispatch();
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   console.log(user)
+  // }, [user])
 
   const handleOpenLogout = (e: React.MouseEvent<HTMLElement>) => {
     const element = (e.target as HTMLElement).closest(".icon") as HTMLElement;

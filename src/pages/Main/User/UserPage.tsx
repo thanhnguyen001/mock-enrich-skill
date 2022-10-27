@@ -1,4 +1,11 @@
-import { AppstoreAddOutlined, CameraFilled, MailOutlined, PhoneOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import {
+  AppstoreAddOutlined,
+  CameraFilled,
+  FolderOpenOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  UnorderedListOutlined,
+} from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { postApi } from "api/postApi";
 import { userApi } from "api/userApi";
@@ -7,12 +14,13 @@ import { BASE_API_GET_IMG } from "constants/constant";
 import { useAppDispatch, useAppSelector } from "hooks/hook";
 import { ILayout, INews, IUploadFileRes, IUser } from "models";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { initialLayout, setLayout } from "reducers/layoutReducer";
 import "./UserPage.scss";
 import { Menu } from "antd";
 import { setUserInfo } from "reducers/userReducer";
 import { mediaApi } from "api/mediaApi";
+import AddNew from "./AddNew";
 
 const items: MenuProps["items"] = [
   {
@@ -35,6 +43,9 @@ const UserPage: React.FC = () => {
   const [post, setPost] = useState<INews[]>([]);
   const [view, setView] = useState("list");
   const [avatar, setAvatar] = useState("");
+  const [viewList, setViewList] = useState(items);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userLayout: ILayout = {
@@ -51,10 +62,32 @@ const UserPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
+  useEffect(() => {
+    if (view === "list" && user) {
+      getListNews(user);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view]);
+
+  const handleCheckAdmin = (user: IUser) => {
+    if (user && `${user.nhom_nhan_vien_id}` === "1") {
+      const newList = [
+        ...items,
+        {
+          label: "Trang quản lý",
+          key: "admin",
+          icon: <FolderOpenOutlined />,
+        },
+      ];
+      setViewList(newList);
+    }
+  };
+
   const handleGetUser = async () => {
     if (!userId) return;
     try {
       const res = await userApi.getUser(userId);
+      handleCheckAdmin(res.data);
       setUser(res.data);
       setAvatar(`${res.data.anh_dai_dien}`);
       getListNews(res.data);
@@ -76,6 +109,10 @@ const UserPage: React.FC = () => {
   };
 
   const handleChangeView: MenuProps["onClick"] = (e) => {
+    if (e.key === 'admin') {
+      navigate('/admin');
+      return;
+    }
     setView(e.key);
   };
 
@@ -159,15 +196,20 @@ const UserPage: React.FC = () => {
               onClick={handleChangeView}
               selectedKeys={[view]}
               mode="horizontal"
-              items={items}
+              items={viewList}
             />
           </div>
-          <div className="list-news">
-            {post.map((item, index) => (
-              <News key={index} news={item} />
-            ))}
-            {!post.length && <div className="text-tx-color text-center">chưa có bài viết nào!</div>}
-          </div>
+
+          {view === "create-post" && <AddNew onCancelCreate={() => setView("list")} />}
+
+          {view === "list" && (
+            <div className="list-news">
+              {post.map((item, index) => (
+                <News key={index} news={item} />
+              ))}
+              {!post.length && <div className="text-tx-color text-center">chưa có bài viết nào!</div>}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -10,7 +10,11 @@ import { show } from "reducers/dialogReducer";
 
 const { Option } = Select;
 
-const PostForm: React.FC = () => {
+type AddNewProps = {
+  onCancelCreate: Function
+}
+
+const AddNew: React.FC<AddNewProps> = ({onCancelCreate}) => {
   const [form] = Form.useForm();
 
   //Router
@@ -21,7 +25,6 @@ const PostForm: React.FC = () => {
   const listCategory = useAppSelector((state) => state.category).list;
 
   //State
-  const [isDetail, setIsDetail] = useState(false);
   const [content, setContent] = useState("Nhấn để nhập nội dung");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [post, setPost] = useState<INews>();
@@ -46,7 +49,6 @@ const PostForm: React.FC = () => {
           contentElement.innerHTML = res.data?.noi_dung ? res.data.noi_dung : "";
         }
       }
-
     } catch (error) {
       console.log(error);
     }
@@ -90,7 +92,7 @@ const PostForm: React.FC = () => {
                 },
               ]}
             >
-              <Input autoComplete="on" readOnly={isDetail} />
+              <Input autoComplete="on" />
             </Form.Item>
           </Col>
           <Col lg={24} md={24} sm={24} xs={24}>
@@ -104,13 +106,13 @@ const PostForm: React.FC = () => {
                 },
               ]}
             >
-              <Input autoComplete="on" readOnly={isDetail} />
+              <Input autoComplete="on" />
             </Form.Item>
           </Col>
           <Col>
             {listCategory.length > 0 && (
               <Form.Item name="nhom_tin_tuc_id" label="Nhóm tin tức" className="mr-16 min-w-[150px]">
-                <Select disabled={isDetail} placeholder="Chọn nhóm tin tức">
+                <Select placeholder="Chọn nhóm tin tức">
                   {listCategory.map((item, index) => (
                     <Option key={index} value={item.nhom_tin_tuc_id}>
                       {item.ten_nhom}
@@ -130,15 +132,7 @@ const PostForm: React.FC = () => {
               </Form.Item>
             </div>
           </Col>
-          {/* <Col lg={24} md={24} sm={24} xs={24}>
-            <div className="edit-option">
-              <div className="edit-option-list px-[16px] py-[8px] rounded border flex gap-[16px] items-center">
-                <div className="edit-option-item cursor-pointer">H1</div>
-                <div className="edit-option-item cursor-pointer">H2</div>
-                <div className="edit-option-item cursor-pointer">Font</div>
-              </div>
-            </div>
-          </Col> */}
+    
           <Col lg={24} md={24} sm={24} xs={24}>
             <Form.Item name="noi_dung" label="Nội dung">
               <div
@@ -153,40 +147,24 @@ const PostForm: React.FC = () => {
             </Form.Item>
           </Col>
 
-          {!isDetail && (
-            <Col lg={24}>
-              <div className="flex justify-end">
-                <Form.Item>
-                  <Button type="primary" className="mt-16px w-[100px] mr-16px bg-cancel">
-                    <Link to={"/admin/post-management"}>Hủy bỏ</Link>
-                  </Button>
-                </Form.Item>
-                <Form.Item>
-                  <Button type="primary" htmlType="submit" className="mt-16px w-[min-content]">
-                    {postId ? "Cập nhật" : "Thêm bài viết"}
-                  </Button>
-                </Form.Item>
-              </div>
-            </Col>
-          )}
-
-          {isDetail && (
-            <Col lg={24}>
-              <div className="flex justify-end">
-                <Form.Item>
-                  <Button type="primary" className="mt-16px w-[min-content] mr-16px ">
-                    <Link onClick={() => setIsDetail(false)} to={`/admin/post-management/edit/${postId}`}>
-                      Chỉnh sửa bài viết
-                    </Link>
-                  </Button>
-                </Form.Item>
-              </div>
-            </Col>
-          )}
+          <Col lg={24}>
+            <div className="flex justify-end">
+              <Form.Item>
+                <Button type="primary" className="mt-16px w-[100px] mr-16px bg-cancel">
+                  <span onClick={() => onCancelCreate()}>Hủy bỏ</span>
+                </Button>
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit" className="mt-16px w-[min-content]">
+                  {postId ? "Cập nhật" : "Thêm bài viết"}
+                </Button>
+              </Form.Item>
+            </div>
+          </Col>
         </Row>
       </Form>
     </div>
   );
 };
 
-export default PostForm;
+export default AddNew;

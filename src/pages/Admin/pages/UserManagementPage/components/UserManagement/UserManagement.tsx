@@ -120,7 +120,7 @@ const UserManagement: React.FC = () => {
                 return (
                   <div className="relative action-wrapper">
                     <span>{text}</span>
-                    <ul className="absolute m-0 p-0 flex items-center w-full top-[-24px] left-[0px] hidden action">
+                    <ul className="absolute m-0 p-0 flex items-center w-full top-[-20px] left-[0px] hidden action">
                       <li className="text-[green] mr-16px cursor-pointer" onClick={() => handleMoveToEditPage('detail', listUser[index].nhan_vien_id)}>
                         <EyeOutlined />
                       </li>

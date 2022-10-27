@@ -77,9 +77,11 @@ const UserForm: React.FC = () => {
         body[key] = value[key];
       }
     }
+
+    const api = userId ? userApi.updateUser({ ...body }) : userApi.postUser({...body});
     
     try {
-      const res = await userApi.updateUser({ ...body });
+      const res = await api;
       if (res.data) {
         dispatch(
           show({
@@ -89,7 +91,9 @@ const UserForm: React.FC = () => {
             title: "",
           })
         );
-        form.resetFields();
+        if (!userId) {
+          form.resetFields();
+        }
       }
     } catch (error) {
       console.log(error);

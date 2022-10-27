@@ -4,3 +4,46 @@ main {
         padding-top: calc(var(--height-header) + 16px);
     }
 }
+
+@media screen and (max-width: 1024px) {
+    #right-bar {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 776px) {
+    #right-bar {
+        display: none;
+    }
+
+    #left-bar {
+        width: 100%;
+
+        .categories {
+            margin-top: 16px;
+            max-width: 100%;
+            overflow-x: auto;
+
+            .list {
+                display: flex;
+
+                .category-name {
+                    min-width: max-content;
+                }
+            }
+
+            .tags, .separate {
+                display: none;
+            }
+        }
+
+    }
+
+    main {
+        flex-direction: column;
+
+        .content {
+            padding-top: 0;
+        }
+    }
+}

@@ -9,18 +9,18 @@ export const cancelReqUser = new AbortController();
 
 export const userApi = {
   postUser: (body: IReqRegUser) => {
-    return axiosClient.post<IResRegUser>(pathApi.user.register, body, { signal: cancelReqUser.signal });
+    return axiosClient.post<IResRegUser>(pathApi.user.register, body);
   },
   loginUser: (body: ILoginUser) => {
-    return axiosClient.post<IResRegUser>(pathApi.user.login, body, { signal: cancelReqUser.signal });
+    return axiosClient.post<IResRegUser>(pathApi.user.login, body);
   },
   getUser: (id: string) => {
     const api = buildApi(pathApi.user.getUser, { id });
-    return axiosClient.get<IUser>(api, { signal: cancelReqUser.signal });
+    return axiosClient.get<IUser>(api);
   },
   updateUser: (body: IUser) => {
     const api = buildApi(pathApi.user.update, { id: body.nhan_vien_id });
-    return axiosClient.put<{data: IUploadFileRes}>(api, body, { signal: cancelReqUser.signal });
+    return axiosClient.put<{data: IUploadFileRes}>(api, body);
   },
   getListUser: async (query?: INewsQueries) => {
     const api = buildApi(pathApi.user.getListUser, null, query);
