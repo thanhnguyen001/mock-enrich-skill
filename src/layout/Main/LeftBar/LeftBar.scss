@@ -10,16 +10,7 @@
 
     .category {
       justify-content: center;
-
-      &-name {
-        text-overflow: ellipsis;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        max-width: 200px;
-      }
     }
-
   }
   .categories {
     top: calc(var(--height-header) + 16px);
@@ -29,7 +20,8 @@
     transition: all 0.1s ease-in-out;
     min-height: 40px;
 
-    &.active, &:hover {
+    &.active,
+    &:hover {
       background-color: rgb(155, 212, 245);
     }
   }
@@ -41,4 +33,12 @@
       }
     }
   }
+}
+
+.category-name {
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 200px;
 }
