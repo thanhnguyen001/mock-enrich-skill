@@ -156,6 +156,7 @@
       &.active-mobile {
         width: 100vw;
         left: 0;
+        z-index: 1000;
       }
     }
     .adm-body {
